@@ -1,8 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import Map1 from '../map/map1.json'
-
-import Arrow from '../assets/Arrow.svg'
 
 const Container = styled.div`
     position: relative;
@@ -41,19 +38,6 @@ const Box = styled.div`
     align-items:center;
 `
 
-const ShipSvg = styled.img`
-    width: 30px;
-    transform: rotate(${props => props.rotation}deg);
-
-    grid-column-start: ${props => props.x};
-    grid-column-end: ${props => props.x + 1};
-    grid-row-start: ${props => props.y};
-    grid-row-end: ${props => props.y + 1};
-
-    justify-self: center;
-    align-self:center;
-`
-
 /*
 
 Le board :
@@ -77,25 +61,24 @@ Le board :
 
 */
 
-function Ship() {
-    const [position, setPosition] = useState({x: 1, y: 1})
-    
-    return <ShipSvg x = {position.x} y = {position.y} src = {Arrow}/>
-}
 
-function Board() {
+/*
 
-    const xLen = Map1.length
-    const yLen = Map1[0].length
+
+*/
+function Board({ map, children }) {
+
+    const xLen = map.length
+    const yLen = map[0].length
 
     return (
         <React.Fragment>
             <Container x = {xLen} y = {yLen}>
                 <InvisibleGrid x = {xLen} y = {yLen}>
-                    <Ship/>
+                    { children }
                 </InvisibleGrid>
                 {
-                    Map1.map((row) => {
+                    map.map((row) => {
                         return row.map((box) => <Box color = {box.color}/>)
                     })
                 }
