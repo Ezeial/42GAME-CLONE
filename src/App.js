@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import Board from './components/board'
+import Ship from './components/ship'
+import Control from './components/action'
 import styled from 'styled-components'
 import Map1 from './map/map1.json'
-import Ship from './components/ship'
 
 const Container = styled.div`
   display: flex;
@@ -47,9 +48,10 @@ function App() {
    
   return (
     <Container>
-      <Board map = {Map1} shipInfo = {shipInfo}>
+      <Board map = {Map1} >
         <Ship info = {shipInfo}/>
       </Board>
+      <Control shipControl = { { turnR: rotateRight, turnL: rotateLeft, move: moveShip } }/>
     </Container>
   )
 }
