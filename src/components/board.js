@@ -38,34 +38,6 @@ const Box = styled.div`
     align-items:center;
 `
 
-/*
-
-Le board :
-    - sa taille sera définit par le tableau d'objet qu'on récupere
-
-    array[x][y] = [
-        [{obj}, {obj}, {obj}],
-        [{obj}, {obj}, {obj}],
-        [{obj}, {obj}, {obj}]
-    ]
-
-    x: column , y: rows
-
-        obj (case): {
-            color: '#000',
-            stars: true
-        }
-
-    On mappe le board avec comme deux variable la taille des arrays
-    On mappe les cases avec comme couleur la proriété color
-
-*/
-
-
-/*
-
-
-*/
 function Board({ map, children }) {
 
     const xLen = map.length

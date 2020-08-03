@@ -17,7 +17,6 @@ const Container = styled.div`
 function App() {
   return (
     <Container>
-      {/* j'entours toute l'app avec mon context pour qu'ils puissent tous avoir accès a mon store */}
       <ShipContextProvider>
         <Board map={Map1}>
           <Ship />
