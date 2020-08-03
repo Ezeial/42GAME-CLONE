@@ -1,22 +1,25 @@
-import React from 'react'
-import styled from 'styled-components'
-import Arrow from '../assets/Arrow.svg'
+import React from "react";
+import styled from "styled-components";
+import Arrow from "../assets/Arrow.svg";
+import { useShipStore } from "../ShipContextProvider";
 
 const ShipSvg = styled.img`
-    width: 30px;
-    transform: rotate(${props => props.angle}deg);
+  width: 30px;
+  transform: rotate(${(props) => props.angle}deg);
 
-    grid-column-start: ${props => props.x};
-    grid-column-end: ${props => props.x + 1};
-    grid-row-start: ${props => props.y};
-    grid-row-end: ${props => props.y + 1};
+  grid-column-start: ${(props) => props.x};
+  grid-column-end: ${(props) => props.x + 1};
+  grid-row-start: ${(props) => props.y};
+  grid-row-end: ${(props) => props.y + 1};
 
-    justify-self: center;
-    align-self:center;
-`
+  justify-self: center;
+  align-self: center;
+`;
 
-function Ship({ info }) {
-    return <ShipSvg angle = {info.rotation} x = {info.x} y = {info.y} src = {Arrow}/>
+function Ship() {
+  const { getShipInfo } = useShipStore();
+  const { x, y, rotation } = getShipInfo();
+  return <ShipSvg angle={rotation} x={x} y={y} src={Arrow} />;
 }
 
-export default Ship
+export default Ship;
