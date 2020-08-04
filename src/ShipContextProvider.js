@@ -53,6 +53,7 @@ export const ShipContextProvider = ({ children }) => {
               y: ship.y - 1,
               r: ship.r
             }
+          default: return
         }
       case 'RIGHT':
         return {
@@ -60,6 +61,7 @@ export const ShipContextProvider = ({ children }) => {
           y: ship.y,
           r: (ship.r + 90) % 360
         }
+      default: return
     }
   }
 
