@@ -72,12 +72,10 @@ export const ShipContextProvider = ({ children }) => {
 
   const getShipInfo = () => ship
 
-  const getQueue = () => getActions()
-
   const values = {
     getShipInfo,
     playNextTurn,
-    getQueue,
+    getActions,
     add
   }
 
