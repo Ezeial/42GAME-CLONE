@@ -72,10 +72,8 @@ export const ShipContextProvider = ({ children }) => {
     increment()
   }
 
-  const getShipInfo = () => ship
-
   const values = {
-    getShipInfo,
+    ship,
     playNextTurn,
     actions,
     add

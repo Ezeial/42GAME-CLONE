@@ -16,7 +16,7 @@ const useQueue = (initialValue = []) => {
     
     const getAction = () => actions[actionIndex]
 
-    const isLast = () => actionIndex === actions.length - 1
+    const isLast = () => actionIndex === actions.length
   
     return {
       add,

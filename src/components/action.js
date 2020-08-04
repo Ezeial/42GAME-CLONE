@@ -1,3 +1,4 @@
+import React from 'react'
 import { useShipStore } from "../ShipContextProvider"
 
 function Control() {
