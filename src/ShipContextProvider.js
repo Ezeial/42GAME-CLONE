@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState } from "react"
 import Map1 from "./map/map1.json"
-import useQueue from './utils/queue'
+import useQueue from './utils/useQueue'
 
-const TiqetContext = createContext({})
+const ShipContext = createContext({})
 
 export const ShipContextProvider = ({ children }) => {
 
@@ -11,7 +11,7 @@ export const ShipContextProvider = ({ children }) => {
     add,
     increment,
     getAction,
-    getActions,
+    actions,
     isLast
   } = useQueue(['FORWARD', 'LEFT', 'RIGHT'])
 
@@ -77,15 +77,15 @@ export const ShipContextProvider = ({ children }) => {
   const values = {
     getShipInfo,
     playNextTurn,
-    getActions,
+    actions,
     add
   }
 
-  return <TiqetContext.Provider value={values}>{children}</TiqetContext.Provider>;
+  return <ShipContext.Provider value={values}>{children}</ShipContext.Provider>;
 }
 
 export function useShipStore() {
-  return useContext(TiqetContext);
+  return useContext(ShipContext);
 }
 
 export default ShipContextProvider;

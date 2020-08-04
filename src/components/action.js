@@ -1,8 +1,7 @@
-import React from "react"
 import { useShipStore } from "../ShipContextProvider"
 
 function Control() {
-  const { playNextTurn, getActions, add } = useShipStore()
+  const { playNextTurn, actions, add } = useShipStore()
 
   return (
     <div>
@@ -12,7 +11,7 @@ function Control() {
       <button onClick={() => console.log(add('LEFT'))}>ADD LEFT</button>
       <h1>QUEUE :</h1>
       {
-        getActions().map(item => <div>{item}</div>)
+        actions.map(item => <div>{item}</div>)
       }
     </div>
   )

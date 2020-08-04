@@ -1,32 +1,28 @@
 import {useState} from 'react'
 
 const useQueue = (initialValue = []) => {
-    const [actions, setActions] = useState([...initialValue, 'END'])
+    const [actions, setActions] = useState(initialValue)
     const [actionIndex, setActionIndex] = useState(0)
   
-    const add = item => {
-      const tempArray = actions.filter(item => item !== 'END')
-      setActions(tempArray)
-      setActions([...tempArray, item, 'END'])
+    const add = action => {
+      setActions([...actions, action])
     }
   
     const increment = callback => {
-      if (!actions[actionIndex + 1]) return
+      if (isLast()) return
       setActionIndex(prev => prev + 1)
       console.log(actions[actionIndex])
     }
     
     const getAction = () => actions[actionIndex]
 
-    const getActions = () => actions
-
-    const isLast = () => actions[actionIndex] === 'END' ? true : false
+    const isLast = () => actionIndex === actions.length - 1
   
     return {
       add,
       increment,
       getAction,
-      getActions,
+      actions,
       isLast
     }
   }

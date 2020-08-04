@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -44,7 +43,7 @@ function Board({ map, children }) {
     const yLen = map[0].length
 
     return (
-        <React.Fragment>
+        <>
             <Container x = {xLen} y = {yLen}>
                 <InvisibleGrid x = {xLen} y = {yLen}>
                     { children }
@@ -55,7 +54,7 @@ function Board({ map, children }) {
                     })
                 }
             </Container>
-        </React.Fragment>
+        </>
     )
 }
 
