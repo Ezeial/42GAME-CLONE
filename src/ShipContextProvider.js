@@ -1,57 +1,90 @@
-import React, { createContext, useContext, useState } from "react";
-import Map1 from "./map/map1.json";
+import React, { createContext, useContext, useState } from "react"
+import Map1 from "./map/map1.json"
 
-const TiqetContext = createContext({});
+const TiqetContext = createContext({})
 
 export const ShipContextProvider = ({ children }) => {
-  const [shipX, setShipX] = useState(1);
-  const [shipY, setShipY] = useState(1);
-  const [shipRotation, setShipRoation] = useState(0);
 
-  const getShipInfo = () => ({ x: shipX, y: shipY, rotation: shipRotation });
+  const [ship, setShip] = useState({x: 1, y: 1, r: 0})
+  const [action, setAction] = useState(['FORWARD', 'RIGHT', 'FORWARD', 'LEFT'])
+  const [actionIndex, setActionIndex] = useState(0)
 
-  const moveShip = function () {
-    switch (shipRotation) {
-      case 0:
-        if (shipX === Map1.length) return;
-        setShipX((prev) => prev + 1);
-        break;
-      case 90:
-        if (shipY === Map1.length) return;
-        setShipY((prev) => prev + 1);
-        break;
-      case 180:
-        if (shipX === 1) return;
-        setShipX((prev) => prev - 1);
-        break;
-      case 270:
-        if (shipY === 1) return;
-        setShipY((prev) => prev - 1);
-        break;
+  const doTurn = (ship, action) => {
+    switch (action) {
+      case 'LEFT': 
+        return {
+          x: ship.x,
+          y: ship.y,
+          r: (ship.r + 270) % 360
+        }
+      case 'FORWARD':
+        switch (ship.r) {
+          case 0:
+            if (ship.x === Map1.length) return ship
+            return {
+              x: ship.x + 1,
+              y: ship.y,
+              r: ship.r
+            }
+          case 90:
+            if (ship.y === Map1.length) return ship
+            return {
+              x: ship.x,
+              y: ship.y + 1,
+              r: ship.r
+            }
+          case 180:
+            if (ship.x === 1) return ship
+            return {
+              x: ship.x - 1,
+              y: ship.y,
+              r: ship.r
+            }
+          case 270:
+            if (ship.y === 1) return ship
+            return {
+              x: ship.x,
+              y: ship.y - 1,
+              r: ship.r
+            }
+        }
+      case 'RIGHT':
+        return {
+          x: ship.x,
+          y: ship.y,
+          r: (ship.r + 90) % 360
+        }
     }
-  };
+  }
 
-  const rotateRight = function () {
-    setShipRoation((prev) => (prev + 90) % 360);
-  };
+  const playNextTurn = () => {
+    if (action.length === actionIndex) return
+    const nextShip = doTurn(ship, action[actionIndex])
+    setShip(nextShip)
+    setActionIndex(prev => prev + 1)
+  }
 
-  const rotateLeft = function () {
-    setShipRoation((prev) => (prev + 270) % 360);
-  };
+  const getShipInfo = () => ship
 
-  // les functions / valeurs que renvoie notre store
   const values = {
-    moveShip,
     getShipInfo,
-    rotateLeft,
-    rotateRight,
-  };
+    playNextTurn
+  }
 
   return <TiqetContext.Provider value={values}>{children}</TiqetContext.Provider>;
-};
+}
 
 export function useShipStore() {
   return useContext(TiqetContext);
 }
 
 export default ShipContextProvider;
+
+  
+
+
+
+  // const doAction = (action) => {
+  //   const newShip = doTurn(action)
+  //   setShip(newShip)
+  // }

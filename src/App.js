@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Board from "./components/board";
 import Ship from "./components/ship";
 import Control from "./components/action";
