@@ -4,7 +4,7 @@ import Arrow from "../assets/Arrow.svg"
 import { useShipStore } from "../ShipContextProvider"
 
 const ShipSvg = styled.img`
-  width: 30px;
+  width: 60px;
   transform: rotate(${(props) => props.angle}deg);
 
   grid-column-start: ${(props) => props.x};

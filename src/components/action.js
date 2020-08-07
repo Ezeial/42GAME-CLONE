@@ -1,21 +1,38 @@
 import React from 'react'
+import ActionBox from '../subcomponents/ActionBox'
+import styled from 'styled-components'
 import { useShipStore } from "../ShipContextProvider"
 
+const Container = styled.div`
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-direction: column;
+  background-color: #EEE;
+  border-radius: 5px;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.25), 
+    0 2px 2px rgba(0,0,0,0.20), 
+    0 4px 4px rgba(0,0,0,0.15), 
+    0 8px 8px rgba(0,0,0,0.10),
+    0 16px 16px rgba(0,0,0,0.05);
+`
+
 function Control() {
-  const { playNextTurn, actions, add } = useShipStore()
+  // const { playNextTurn, actions, add } = useShipStore()
 
   return (
-    <div>
-      <button onClick={() => playNextTurn()}>NEXT</button>
-      <button onClick={() => console.log(add('FORWARD'))}>ADD FORWARD</button>
-      <button onClick={() => console.log(add('RIGHT'))}>ADD RIGHT</button>
-      <button onClick={() => console.log(add('LEFT'))}>ADD LEFT</button>
-      <h1>QUEUE :</h1>
-      {
-        actions.map(item => <div>{item}</div>)
-      }
-    </div>
+    <Container>
+      {/* <div>
+        <button onClick={() => playNextTurn()}>NEXT</button>
+        <button onClick={() => console.log(add('FORWARD'))}>ADD FORWARD</button>
+        <button onClick={() => console.log(add('RIGHT'))}>ADD RIGHT</button>
+        <button onClick={() => console.log(add('LEFT'))}>ADD LEFT</button>
+      </div> */}
+      <ActionBox/>
+    </Container>
   )
 }
 
 export default Control
+// switch animation , filter (item i) => i === 0 .push(nextItem)
+
