@@ -1,13 +1,14 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import useActions from '../utils/useActions'
 import useToggle from '../utils/useToggle'
 import Move from '../assets/Move.svg'
+import { useActionStore } from "../contexts/ActionContextProvider"
 
 const Container = styled.div`
     display:flex;
     align-items:center;
     justify-content:space-evenly;
+    flex-direction: column;
     padding: 5px;
     margin: 5px;
     border: solid 3px #222;
@@ -18,7 +19,7 @@ const SelectButtonContainer = styled.button`
     position: relative;
     width: 75px;
     height: 75px;
-    background-color: ${props => props.bg ? props.bg : '#EEE'};
+    background-color: ${props => props.bg ? props.bg : '#FFF'};
     border-radius: 5px;
     padding: 5px;
     margin: 5px;
@@ -73,9 +74,8 @@ const AskBoxContainer = styled.div`
 
     position: absolute;
     top:0;
-    transform:translateY(-285px);
+    transform:translateY(-360px);
 
-    z-index: 50;
 `
 
 const AskBoxPannel = styled.div`
@@ -85,51 +85,94 @@ const AskBoxPannel = styled.div`
     flex-direction: column;
 `
 
-const AskBox = ({ reset }) => {
-    const toggleL = useToggle(3)
-    const toggleR = useToggle(3)
+const AskBox = ({ reset, functionNumber, i }) => {
+    const toggleL = useToggle(4)
+    const toggleR = useToggle(4)
+    const { setAction } = useActionStore()
+
+    const colors = Object.freeze({
+        first: '#16a085',
+        second: '#8e44ad',
+        third: '#c0392b'
+    })
 
     useEffect(() => {
         if (toggleL.toggled.find(bool => bool === true) && toggleR.toggled.find(bool => bool === true)) reset()
     }, [toggleL.toggled, toggleR.toggled])
-    
+
     return <AskBoxContainer>
         <AskBoxPannel>
-            <SelectButtonContainer onClick = {() => toggleL.toggle(0)} toggled = {toggleL.toggled[0]} shadow move ><Svg src = {Move} rotate = {90}/></SelectButtonContainer>
-            <SelectButtonContainer onClick = {() => toggleL.toggle(1)} toggled = {toggleL.toggled[1]} shadow move ><Svg src = {Move} rotate = {0}/></SelectButtonContainer>
-            <SelectButtonContainer onClick = {() => toggleL.toggle(2)} toggled = {toggleL.toggled[2]} shadow move ><Svg src = {Move} rotate = {180}/></SelectButtonContainer>
+            <SelectButtonContainer onClick = {() => {
+                setAction({ move: 'F0' }, functionNumber, i)
+                toggleL.toggle(0)
+                }} 
+            toggled = {toggleL.toggled[0]} 
+            shadow>F0</SelectButtonContainer>
+            <SelectButtonContainer onClick = {() => {
+                setAction({ move: 'FORWARD' }, functionNumber, i)
+                toggleL.toggle(1)
+                }}  toggled = {toggleL.toggled[1]} shadow move ><Svg src = {Move} rotate = {90}/></SelectButtonContainer>
+            <SelectButtonContainer onClick = {() => {
+                
+                setAction({ move: 'LEFT' }, functionNumber, i)
+                toggleL.toggle(2)
+                }}  toggled = {toggleL.toggled[2]} shadow move ><Svg src = {Move} rotate = {0}/></SelectButtonContainer>
+            <SelectButtonContainer onClick = {() => {
+                
+                setAction({ move: 'RIGHT' }, functionNumber, i)
+                toggleL.toggle(3)
+                }}  toggled = {toggleL.toggled[3]} shadow move ><Svg src = {Move} rotate = {180}/></SelectButtonContainer>
         </AskBoxPannel>
         <AskBoxPannel>
-            <SelectButtonContainer onClick = {() => toggleR.toggle(0)} toggled = {toggleR.toggled[0]} shadow bg = '#123'/>
-            <SelectButtonContainer onClick = {() => toggleR.toggle(1)} toggled = {toggleR.toggled[1]} shadow bg = '#234'/>
-            <SelectButtonContainer onClick = {() => toggleR.toggle(2)} toggled = {toggleR.toggled[2]} shadow bg = '#345'/>
+            <SelectButtonContainer onClick = {() => {
+                setAction({ color: colors.first }, functionNumber, i)
+                toggleR.toggle(0)
+                }} toggled = {toggleR.toggled[0]} shadow bg = {colors.first}/>
+            <SelectButtonContainer onClick = {() => {
+                setAction({ color: colors.second }, functionNumber, i)
+                toggleR.toggle(1)
+                }} toggled = {toggleR.toggled[1]} shadow bg = {colors.second}/>
+            <SelectButtonContainer onClick = {() => {
+                setAction({ color: colors.third }, functionNumber, i)
+                toggleR.toggle(2)
+                }} toggled = {toggleR.toggled[2]} shadow bg = {colors.third}/>
+            <SelectButtonContainer onClick = {() => {
+                setAction({ color: colors.reset }, functionNumber, i)
+                toggleR.toggle(3)
+                }} toggled = {toggleR.toggled[3]} shadow bg = {colors.reset}/>
         </AskBoxPannel>
     </AskBoxContainer>
 }
 
-const SelectButton = ({ bg, i, toggled, toggle, reset }) =>  {
-    return <SelectButtonContainer onClick = {() => toggle(i)} toggled = {toggled[i]} bg = {bg}>
-        {i === toggled.indexOf(true) && <AskBox reset = {reset} />}
+const SelectButton = ({ i, toggled, toggle, reset, instruction, functionNumber }) =>  {
+    const moveEnum = Object.freeze({
+        FORWARD: 90,
+        LEFT: 0,
+        RIGHT: 180
+    })
+    return <SelectButtonContainer onClick = {() => toggle(i)} toggled = {toggled[i]} bg = {instruction.color}>
+        {i === toggled.indexOf(true) && <AskBox i = {i} functionNumber = {functionNumber} reset = {reset} />}
+        {(instruction.move && !instruction.move.startsWith('F0')) && <Svg src = {Move} rotate = {moveEnum[instruction.move]}/>}
+        {(instruction.move && instruction.move.startsWith('F0')) && instruction.move}
     </SelectButtonContainer>
 }
 
-const FunctionBox = ({ length, i }) => {
+const FunctionBox = ({ func, functionNumber }) => {
     const { toggle, toggled, reset } = useToggle(4)
 
     return <FunctionBoxContainer>
-        <SelectButtonContainer color = '#EEE' bg = '#222'>F{i}</SelectButtonContainer>
+        <SelectButtonContainer color = '#EEE' bg = '#222'>F{functionNumber}</SelectButtonContainer>
         {
-           length.map((a, i) => <SelectButton  reset = {reset} toggle = {toggle} toggled = {toggled} i = {i} bg = '#FFF'/>) 
+           func.map((instruction, i) => <SelectButton functionNumber = {functionNumber}  reset = {reset} toggle = {toggle} toggled = {toggled} i = {i} instruction = {instruction}/>) 
         }
     </FunctionBoxContainer>
 }
 
 function ActionBox() {
-    const functionsSchema = [ 4 ]
-    const { getAction, setAction } = useActions()
+    const { actions } = useActionStore()
 
     return <Container>
-            {functionsSchema.map((caseNumber, i) => <FunctionBox i = {i} length = {Array.from(Array(caseNumber))}/>)}
+            {actions.map((func, i) => <FunctionBox functionNumber = {i} func = {func}/> )}
     </Container>
 }
 

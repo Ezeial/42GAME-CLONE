@@ -1,7 +1,7 @@
 import React from 'react'
 import ActionBox from '../subcomponents/ActionBox'
 import styled from 'styled-components'
-import { useShipStore } from "../ShipContextProvider"
+import { useShipStore } from "../contexts/ShipContextProvider"
 
 const Container = styled.div`
   display:flex;
@@ -18,16 +18,10 @@ const Container = styled.div`
 `
 
 function Control() {
-  // const { playNextTurn, actions, add } = useShipStore()
+  const { playNextTurn, actions, add } = useShipStore()
 
   return (
     <Container>
-      {/* <div>
-        <button onClick={() => playNextTurn()}>NEXT</button>
-        <button onClick={() => console.log(add('FORWARD'))}>ADD FORWARD</button>
-        <button onClick={() => console.log(add('RIGHT'))}>ADD RIGHT</button>
-        <button onClick={() => console.log(add('LEFT'))}>ADD LEFT</button>
-      </div> */}
       <ActionBox/>
     </Container>
   )

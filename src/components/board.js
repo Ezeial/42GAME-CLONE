@@ -3,8 +3,8 @@ import styled from 'styled-components'
 
 const Container = styled.div`
     position: relative;
-    width: 750px;
-    height: 750px;
+    width: 500px;
+    height: 500px;
 
     display: grid;
     background-color: rgb(220, 220, 220);
@@ -27,8 +27,8 @@ const InvisibleGrid = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    width: 750px;
-    height: 750px;
+    width: 500px;
+    height: 500px;
     display: grid;
     grid-template-rows: repeat(${props => props.x}, 1fr);
     grid-template-columns: repeat(${props => props.y}, 1fr); 

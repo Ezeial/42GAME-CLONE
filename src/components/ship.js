@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from "styled-components"
 import Arrow from "../assets/Arrow.svg"
-import { useShipStore } from "../ShipContextProvider"
+import { useShipStore } from "../contexts/ShipContextProvider"
 
 const ShipSvg = styled.img`
-  width: 60px;
+  width: 30px;
   transform: rotate(${(props) => props.angle}deg);
 
   grid-column-start: ${(props) => props.x};

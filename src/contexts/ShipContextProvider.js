@@ -1,19 +1,24 @@
 import React, { createContext, useContext, useState } from "react"
-import Map1 from "./map/map1.json"
-import useQueue from './utils/useQueue'
+import { useActionStore } from './ActionContextProvider'
+import Map1 from "../map/map1.json"
+import useQueue from '../utils/useQueue'
 
 const ShipContext = createContext({})
 
 export const ShipContextProvider = ({ children }) => {
 
   const [ship, setShip] = useState({x: 1, y: 1, r: 0})
+  const { getActions } = useActionStore()
   const {
     add,
+    adds,
     increment,
     getAction,
     actions,
+    displayedQueue,
+    resetQueue,
     isLast
-  } = useQueue(['FORWARD', 'LEFT', 'RIGHT'])
+  } = useQueue(['F0'])
 
   const doTurn = (ship, action) => {
     switch (action) {
@@ -61,7 +66,11 @@ export const ShipContextProvider = ({ children }) => {
           y: ship.y,
           r: (ship.r + 90) % 360
         }
-      default: return
+      case 'F0': {
+        adds(getActions(0).map(a => a.move))
+        return ship
+      }
+      default: return ship
     }
   }
 
@@ -72,11 +81,19 @@ export const ShipContextProvider = ({ children }) => {
     increment()
   }
 
+  const reset = () => {
+    setShip({x: 1, y: 1, r: 0})
+    resetQueue()
+  }
+
   const values = {
     ship,
     playNextTurn,
     actions,
-    add
+    displayedQueue,
+    reset,
+    add,
+    adds
   }
 
   return <ShipContext.Provider value={values}>{children}</ShipContext.Provider>;
