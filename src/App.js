@@ -10,10 +10,12 @@ import ShipContextProvider from "./contexts/ShipContextProvider";
 import ActionContextProvider from "./contexts/ActionContextProvider";
 
 const Container = styled.div`
+  overflow: hidden; 
   display: flex;
+  position: relative;
   width: 100%;
   height: 100vh;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   flex-direction:column;
 `;

@@ -3,6 +3,7 @@ import ActionBox from '../subcomponents/ActionBox'
 import styled from 'styled-components'
 
 const Container = styled.div`
+  margin: 5px;
   display:flex;
   justify-content:space-between;
   align-items:center;
