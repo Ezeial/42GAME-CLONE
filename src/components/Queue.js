@@ -7,11 +7,11 @@ const Container = styled.div`
 `
 function Queue() {
     
-    const { displayedQueue } = useShipStore()
+    const { actions } = useShipStore()
 
     return (
         <Container>
-            { displayedQueue.map(a => <div>{a}</div>) }
+            { actions.map((a, i) => <div key = {i}>{a}</div>) }
         </Container>
     )
 }

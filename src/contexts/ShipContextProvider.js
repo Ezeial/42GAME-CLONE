@@ -10,19 +10,18 @@ export const ShipContextProvider = ({ children }) => {
   const [ship, setShip] = useState({x: 1, y: 1, r: 0})
   const { getActions } = useActionStore()
   const {
-    add,
-    adds,
     increment,
     getAction,
     actions,
-    displayedQueue,
     resetQueue,
-    isLast
+    isLast,
+    mapFunction
   } = useQueue(['F0'])
 
   const doTurn = (ship, action) => {
     switch (action) {
       case 'LEFT': 
+      increment()
         return {
           x: ship.x,
           y: ship.y,
@@ -31,6 +30,7 @@ export const ShipContextProvider = ({ children }) => {
       case 'FORWARD':
         switch (ship.r) {
           case 0:
+            increment()
             if (ship.x === Map1.length) return ship
             return {
               x: ship.x + 1,
@@ -38,6 +38,7 @@ export const ShipContextProvider = ({ children }) => {
               r: ship.r
             }
           case 90:
+            increment()
             if (ship.y === Map1.length) return ship
             return {
               x: ship.x,
@@ -45,6 +46,7 @@ export const ShipContextProvider = ({ children }) => {
               r: ship.r
             }
           case 180:
+            increment()
             if (ship.x === 1) return ship
             return {
               x: ship.x - 1,
@@ -52,6 +54,7 @@ export const ShipContextProvider = ({ children }) => {
               r: ship.r
             }
           case 270:
+            increment()
             if (ship.y === 1) return ship
             return {
               x: ship.x,
@@ -61,13 +64,14 @@ export const ShipContextProvider = ({ children }) => {
           default: return
         }
       case 'RIGHT':
+        increment()
         return {
           x: ship.x,
           y: ship.y,
           r: (ship.r + 90) % 360
         }
       case 'F0': {
-        adds(getActions(0).map(a => a.move))
+        mapFunction(getActions(0).map(a => a.move).filter(x => !!x), actions)
         return ship
       }
       default: return ship
@@ -77,8 +81,7 @@ export const ShipContextProvider = ({ children }) => {
   const playNextTurn = () => {
     if (isLast()) return
     const nextShip = doTurn(ship, getAction())
-    setShip(nextShip)
-    increment()
+    setShip(nextShip)       
   }
 
   const reset = () => {
@@ -90,10 +93,7 @@ export const ShipContextProvider = ({ children }) => {
     ship,
     playNextTurn,
     actions,
-    displayedQueue,
     reset,
-    add,
-    adds
   }
 
   return <ShipContext.Provider value={values}>{children}</ShipContext.Provider>;

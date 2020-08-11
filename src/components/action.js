@@ -1,7 +1,6 @@
 import React from 'react'
 import ActionBox from '../subcomponents/ActionBox'
 import styled from 'styled-components'
-import { useShipStore } from "../contexts/ShipContextProvider"
 
 const Container = styled.div`
   display:flex;
@@ -18,7 +17,6 @@ const Container = styled.div`
 `
 
 function Control() {
-  const { playNextTurn, actions, add } = useShipStore()
 
   return (
     <Container>

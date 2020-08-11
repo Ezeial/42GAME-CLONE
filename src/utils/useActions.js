@@ -18,20 +18,18 @@ const useActions = (initialValue = []) => {
                     }
                     return action
                 })
-            }
+            } else return func
         })
         setActions(newArray)
     }
-
-    const getAction = (functionNumber, index) => actions[functionNumber][index]
     
     const getActions = (functionNumber) => actions[functionNumber]
+    
 
     const resetActions = () => setActions(initialValue)
 
     return {
         setAction,
-        getAction,
         getActions,
         resetActions,
         actions,

@@ -1,48 +1,42 @@
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 
 const useQueue = (initialValue = []) => {
     const [actions, setActions] = useState(initialValue)
-    const [actionIndex, setActionIndex] = useState(0)
-    const [displayedQueue, setDisplayedQueue] = useState(initialValue)
-
-    useEffect(() => {
-      if (actions.length > 10) {
-        setDisplayedQueue(actions.filter((action, i) => i > actions.length - 11))
-      } else setDisplayedQueue(actions)
-      console.log(displayedQueue)
-    }, [actions])
-
-    const add = action => {
-      setActions([...actions, action])
-    }
-
-    const adds = newActions => {
-      setActions([...actions, ...newActions])
-    }
   
     const increment = callback => {
       if (isLast()) return
-      setActionIndex(prev => prev + 1)
+      setActions(actions.filter((a, i) => i !== 0))
     }
     
-    const getAction = () => actions[actionIndex]
+    const getAction = () => actions[0]
 
-    const isLast = () => actionIndex === actions.length
+    const isLast = () => 0 === actions.length
     
     const resetQueue = () =>{ 
-      setActionIndex(0)
       setActions(initialValue)
     }
 
+    // Nouvelle queue , [ 'F0' , 'FORWARD', 'UP' ]
+    // si 'FO' -> map(newAction -> F0)
+    // si 'ACTION' -> consomme l'action ( return new ship ) -> retire le premier item de l'array et set la nouvelle queue
+
+   const mapFunction = (func, array) => {
+    if (array.length === 1) return setActions([ ...func ]) 
+    return setActions(array.reduce((acc, current, i) => {
+      if(!(Array.isArray(acc))) acc = [ ...func ]
+      acc.push(current)
+      return acc 
+    }))
+  }
+ 
+
     return {
-      add,
       increment,
       getAction,
       actions,
       resetQueue,
-      adds,
-      isLast,
-      displayedQueue
+      mapFunction,
+      isLast
     }
   }
 
