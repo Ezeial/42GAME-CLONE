@@ -10,6 +10,7 @@ const Container = styled.div`
     min-width: 100%;
     display:flex;
     flex-direction:column;
+    background-color: rgb(240, 240, 240);
 `
 
 const Line = styled.div`
@@ -25,7 +26,9 @@ const Line = styled.div`
 
 const ActionsContainer = styled.div`
     display:flex;
+    align-items:center;
 `
+
 const Action = styled.div`
     width: 60px;
     height: 60px;
@@ -42,7 +45,7 @@ const Action = styled.div`
     font-size: 30px;
     font-weight: bold;
 
-    ${props => props.first && `border: solid 2px #f7ca18;`}
+    ${props => props.first && `border: solid 2px #f7ca18; width:70px; height: 70px;`}
     cursor: pointer;
     outline:none;
     box-shadow: 0 1px 1px rgba(0,0,0,0.25), 
@@ -64,7 +67,6 @@ function Queue() {
         LEFT: 0,
         RIGHT: 180
     })
-    const moves = ['FORWARD', 'LEFT', 'RIGHT']
 
     const { actions } = useShipStore()
 
@@ -74,7 +76,7 @@ function Queue() {
                 <ActionsContainer>
                 { 
                     actions.filter((a, i) => !(i > 30)).map((a, i) => <Action first = {i === 0} key = {i}>
-                    {moves.includes(a) ? <Svg src = {Move} rotate = {moveEnum[a]}/> : a}
+                    {['FORWARD', 'LEFT', 'RIGHT'].includes(a) ? <Svg src = {Move} rotate = {moveEnum[a]}/> : a}
                     </Action>) 
                 }
                 </ActionsContainer>

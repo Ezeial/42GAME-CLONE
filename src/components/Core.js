@@ -5,6 +5,7 @@ import { useActionStore } from "../contexts/ActionContextProvider"
 function Core() {
     const {
         playNextTurn,
+        playTheQueue,
         reset
     } = useShipStore()
 
@@ -21,6 +22,7 @@ function Core() {
         <div>
             <button onClick = {resetGame}>reset</button>
             <button onClick = {playNextTurn}>playNextTurn</button>
+            <button onClick = {e => playTheQueue(50)}>playTheQueue</button>
         </div>
     )
 }

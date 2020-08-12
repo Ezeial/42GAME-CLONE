@@ -28,9 +28,9 @@ export const ShipContextProvider = ({ children }) => {
           r: (ship.r + 270) % 360
         }
       case 'FORWARD':
+        increment()
         switch (ship.r) {
           case 0:
-            increment()
             if (ship.x === Map1.length) return ship
             return {
               x: ship.x + 1,
@@ -38,7 +38,6 @@ export const ShipContextProvider = ({ children }) => {
               r: ship.r
             }
           case 90:
-            increment()
             if (ship.y === Map1.length) return ship
             return {
               x: ship.x,
@@ -46,7 +45,6 @@ export const ShipContextProvider = ({ children }) => {
               r: ship.r
             }
           case 180:
-            increment()
             if (ship.x === 1) return ship
             return {
               x: ship.x - 1,
@@ -54,7 +52,6 @@ export const ShipContextProvider = ({ children }) => {
               r: ship.r
             }
           case 270:
-            increment()
             if (ship.y === 1) return ship
             return {
               x: ship.x,
@@ -63,7 +60,7 @@ export const ShipContextProvider = ({ children }) => {
             }
           default: return
         }
-      case 'RIGHT':
+      case 'RIGHT':      
         increment()
         return {
           x: ship.x,
@@ -80,10 +77,20 @@ export const ShipContextProvider = ({ children }) => {
 
   const playNextTurn = () => {
     if (isLast()) return
+    // prends en parametre le vaisseaux { x, y, r }, l'action courante traité dans la queue
+    // et retourne la nouvelle position du vaisseaux en fonction de l'action, met a jour la queue
     const nextShip = doTurn(ship, getAction())
     setShip(nextShip)       
   }
 
+  const playTheQueue = async (i) => {
+    if (isLast()) return
+    playNextTurn()
+    // log la queue
+    console.log(actions)
+    window.setTimeout(playTheQueue, 40);
+  }
+  
   const reset = () => {
     setShip({x: 1, y: 1, r: 0})
     resetQueue()
@@ -92,6 +99,7 @@ export const ShipContextProvider = ({ children }) => {
   const values = {
     ship,
     playNextTurn,
+    playTheQueue,
     actions,
     reset,
   }
