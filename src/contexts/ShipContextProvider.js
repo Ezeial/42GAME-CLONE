@@ -16,7 +16,7 @@ export const ShipContextProvider = ({ children }) => {
     add,
     stopHandler,
     isRunning,
-  } = useQueue(executeAction, [90, 90]);
+  } = useQueue(executeAction);
 
   function executeAction(action) {
     if (action === "FORWARD") {

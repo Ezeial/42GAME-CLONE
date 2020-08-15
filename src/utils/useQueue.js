@@ -21,7 +21,6 @@ const useQueue = (executeAction, initialValue = []) => {
 
   function executeLastAction() {
     setActions((prevActions) => {
-      console.info("Actions:", prevActions, "current action:", prevActions[0]);
       if (prevActions.length === 0) {
         setHandler((prevHandler) => clearInterval(prevHandler));
         return prevActions;
