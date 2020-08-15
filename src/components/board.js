@@ -45,7 +45,12 @@ const Box = styled.div`
     align-items:center;
 `
 
-function Board({ map, children }) {
+// quand tu as un seul composant dans un fichier
+// mieux vaut directe l'export 
+// syntaxe + claire
+
+
+export default function Board({ map, children }) {
 
     const xLen = map.length
     const yLen = map[0].length
@@ -63,5 +68,3 @@ function Board({ map, children }) {
         </Container>
     )
 }
-
-export default Board;

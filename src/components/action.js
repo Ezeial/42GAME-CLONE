@@ -17,7 +17,8 @@ const Container = styled.div`
     0 16px 16px rgba(0,0,0,0.05);
 `
 
-function Control() {
+// le fichier s'appel Action mais le composant Control ==> faut pas
+function Action() {
 
   return (
     <Container>
@@ -26,6 +27,4 @@ function Control() {
   )
 }
 
-export default Control
-// switch animation , filter (item i) => i === 0 .push(nextItem)
-
+export default Action

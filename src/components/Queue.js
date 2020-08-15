@@ -2,6 +2,7 @@ import React from 'react';
 import { useShipStore } from "../contexts/ShipContextProvider"
 import styled from 'styled-components'
 import Move from '../assets/Move.svg'
+import { moveEnum } from '../utils/const';
 
 const Container = styled.div`
     position: absolute;
@@ -62,11 +63,7 @@ const Svg = styled.img`
 
 function Queue() {
     
-    const moveEnum = Object.freeze({
-        FORWARD: 90,
-        LEFT: 0,
-        RIGHT: 180
-    })
+    // on utilse l'object exporté ! 
 
     const { actions } = useShipStore()
 

@@ -3,11 +3,10 @@ import {useState} from 'react'
 const useActions = (initialValue = []) => {
     const [actions, setActions] = useState(initialValue)
 
-    const colors = Object.freeze({
-        first: '#16a085',
-        second: '#8e44ad',
-        third: '#c0392b'
-    })
+    // colors est une constante il n'a pas à être exporté ici.
+    // ici c'est un hooks qui fait des choses pas un exportateur de data
+    // PAS DE DATA dans les composants 
+    // en + il n'était pas utilisé 
 
     const setAction = ( newProp, functionNumber, index) => {
         const newArray = actions.map((func, funcNb) => {
@@ -32,8 +31,7 @@ const useActions = (initialValue = []) => {
         setAction,
         getActions,
         resetActions,
-        actions,
-        colors
+        actions
     }
 }
 

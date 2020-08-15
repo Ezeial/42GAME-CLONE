@@ -3,6 +3,11 @@ import styled from 'styled-components'
 import useToggle from '../utils/useToggle'
 import Move from '../assets/Move.svg'
 import { useActionStore } from "../contexts/ActionContextProvider"
+import { moveEnum, colors } from '../utils/const'
+
+/*
+    TON fichier est TROP grand, entre les styled et le reste. Il faudrait séparé en *plusieurs* fichiers pour une bonne lisibilité 
+*/
 
 const Container = styled.div`
     display:flex;
@@ -90,16 +95,14 @@ const AskBox = ({ reset, functionNumber, i }) => {
     const toggleR = useToggle(4)
     const { setAction } = useActionStore()
 
-    const colors = Object.freeze({
-        first: '#16a085',
-        second: '#8e44ad',
-        third: '#c0392b'
-    })
+    // ajout d'un fichier avec des constante car il n'y a pas de data dans des composants ! 
+    // et pour une meilleur réutilisation 
 
     useEffect(() => {
         if (toggleL.toggled.find(bool => bool === true) && toggleR.toggled.find(bool => bool === true)) reset()
     }, [toggleL.toggled, toggleR.toggled, reset])
 
+    // l'identation est vraiment important, le code ici est ILLISIBLE !! 
     return <AskBoxContainer>
         <AskBoxPannel >
             <SelectButtonContainer onClick = {() => {
@@ -111,7 +114,8 @@ const AskBox = ({ reset, functionNumber, i }) => {
             <SelectButtonContainer onClick = {() => {
                 setAction({ move: 'FORWARD' }, functionNumber, i)
                 toggleL.toggle(1)
-                }}  toggled = {toggleL.toggled[1]} shadow move ><Svg src = {Move} rotate = {90}/></SelectButtonContainer>
+                // il faut coller les props c'est illisible comme ça
+                }}  toggled={toggleL.toggled[1]} shadow move ><Svg src={Move} rotate={90}/></SelectButtonContainer>
             <SelectButtonContainer onClick = {() => {
                 setAction({ move: 'LEFT' }, functionNumber, i)
                 toggleL.toggle(2)
@@ -143,11 +147,7 @@ const AskBox = ({ reset, functionNumber, i }) => {
 }
 
 const SelectButton = ({ i, toggled, toggle, reset, instruction, functionNumber }) =>  {
-    const moveEnum = Object.freeze({
-        FORWARD: 90,
-        LEFT: 0,
-        RIGHT: 180
-    })
+    // tous caca ici on ne comprend rien du tous c'est pas intuitif L'INDENTATION
     return <SelectButtonContainer onClick = {() => toggle(i)} toggled = {toggled[i]} bg = {instruction.color}>
         {i === toggled.indexOf(true) && <AskBox i = {i} functionNumber = {functionNumber} reset = {reset} />}
         {(instruction.move && !instruction.move.startsWith('F0')) && <Svg src = {Move} rotate = {moveEnum[instruction.move]}/>}
@@ -166,12 +166,18 @@ const FunctionBox = ({ func, functionNumber }) => {
     </FunctionBoxContainer>
 }
 
+// ici tu utilise la synataxe function mais pour `FunctionBox` tu utilise la syntaxe avec une function flaiché. 
+// il faut tous faire pareille !!!!
+// PS : la syntaxe function est plus claire 
 function ActionBox() {
     const { actions } = useActionStore()
 
-    return <Container>
-            {actions.map((func, i) => <FunctionBox key = {i} functionNumber = {i} func = {func}/> )}
-    </Container>
+    // quand c'est sur plus d'une ligne, pour la lisbilité on met dans des ()
+    return (
+        <Container>
+                {actions.map((func, i) => <FunctionBox key = {i} functionNumber = {i} func = {func}/> )}
+        </Container>
+    )
 }
 
 export default ActionBox;

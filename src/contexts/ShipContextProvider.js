@@ -83,11 +83,14 @@ export const ShipContextProvider = ({ children }) => {
     setShip(nextShip)       
   }
 
+  // cette function est totalement nbeugé
   const playTheQueue = async (i) => {
     if (isLast()) return
     playNextTurn()
     // log la queue
     console.log(actions)
+    // le setTimeout ne doit pas être mis sur windows
+    // mieux vaut utiliser un interval dans un autrew function que faire une function boucle 
     window.setTimeout(playTheQueue, 40);
   }
   
@@ -113,11 +116,4 @@ export function useShipStore() {
 
 export default ShipContextProvider;
 
-  
-
-
-
-  // const doAction = (action) => {
-  //   const newShip = doTurn(action)
-  //   setShip(newShip)
-  // }
+// pas de code inutile
