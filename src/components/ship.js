@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Arrow from "../assets/Arrow.svg";
+import Arrow from "../assets/arrow.svg";
 import { useShipStore } from "../contexts/ShipContextProvider";
 
 const ShipImg = styled.img`
@@ -18,6 +18,6 @@ const ShipImg = styled.img`
 
 export default function Ship() {
   const { ship } = useShipStore();
-  const { x, y, r } = ship;
-  return <ShipImg angle={r} x={x} y={y} src={Arrow} />;
+  const { x, y, direction } = ship;
+  return <ShipImg angle={direction} x={x} y={y} src={Arrow} />;
 }

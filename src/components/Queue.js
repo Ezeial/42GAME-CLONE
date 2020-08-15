@@ -1,7 +1,6 @@
 import React from "react";
 import { useShipStore } from "../contexts/ShipContextProvider";
 import styled from "styled-components";
-import Move from "../assets/Move.svg";
 
 const Container = styled.div`
   position: absolute;
@@ -51,35 +50,18 @@ const Action = styled.div`
     0 16px 16px rgba(0, 0, 0, 0.05);
 `;
 
-const Svg = styled.img`
-  width: 40px;
-  transform: rotate(${(props) => props.rotate}deg);
-`;
-
 export default function Queue() {
-  const moveEnum = Object.freeze({
-    FORWARD: 90,
-    LEFT: 0,
-    RIGHT: 180,
-  });
-
   const { actions } = useShipStore();
 
   return (
     <Container>
       <Line />
       <ActionsContainer>
-        {actions
-          .filter((a, i) => !(i > 30))
-          .map((a, i) => (
-            <Action first={i === 0} key={i}>
-              {["FORWARD", "LEFT", "RIGHT"].includes(a) ? (
-                <Svg src={Move} rotate={moveEnum[a]} />
-              ) : (
-                a
-              )}
-            </Action>
-          ))}
+        {actions.map((action, i) => (
+          <Action first={i === 0} key={i}>
+            {action === "FORWARD" ? "FO" : action}
+          </Action>
+        ))}
       </ActionsContainer>
       <Line />
     </Container>

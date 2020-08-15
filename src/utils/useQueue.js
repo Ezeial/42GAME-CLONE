@@ -1,43 +1,50 @@
 import { useState } from "react";
 
-const useQueue = (initialValue = []) => {
-  const [actions, setActions] = useState(initialValue);
-
-  const increment = (callback) => {
-    if (isLast()) return;
-    setActions(actions.filter((a, i) => i !== 0));
-  };
-
-  const getAction = () => actions[0];
-
-  const isLast = () => 0 === actions.length;
+const useQueue = (executeAction, initialValue = []) => {
+  const [actions, setActions] = useState([]);
+  // eslint-disable-next-line no-unused-vars
+  const [handler, setHandler] = useState();
 
   const resetQueue = () => {
     setActions(initialValue);
   };
 
-  // Nouvelle queue , [ 'F0' , 'FORWARD', 'UP' ]
-  // si 'FO' -> map(newAction -> F0)
-  // si 'ACTION' -> consomme l'action ( return new ship ) -> retire le premier item de l'array et set la nouvelle queue
+  function add(action) {
+    const prevActions = [...actions];
+    prevActions.push(action);
+    setActions(prevActions);
+  }
 
-  const mapFunction = (func, array) => {
-    if (array.length === 1) return setActions([...func]);
-    return setActions(
-      array.reduce((acc, current, i) => {
-        if (!Array.isArray(acc)) acc = [...func];
-        acc.push(current);
-        return acc;
-      })
-    );
-  };
+  function executeAllQueue() {
+    const handler = setInterval(executeLastAction, 1000);
+    setHandler(handler);
+  }
+
+  function executeLastAction() {
+    setActions((prevActions) => {
+      console.info("Actions:", prevActions, "current action:", prevActions[0]);
+      if (prevActions.length === 0) {
+        setHandler((prevHandler) => clearInterval(prevHandler));
+        return prevActions;
+      }
+
+      executeAction(prevActions[0]);
+      const newActions = [...prevActions];
+      newActions.shift();
+
+      return newActions;
+    });
+  }
+
+  const isRunning = Boolean(handler);
 
   return {
-    increment,
-    getAction,
     actions,
     resetQueue,
-    mapFunction,
-    isLast,
+    executeLastAction,
+    executeAllQueue,
+    add,
+    isRunning,
   };
 };
 

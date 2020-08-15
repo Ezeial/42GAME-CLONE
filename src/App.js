@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import Map1 from "./map/map1.json";
 import ShipContextProvider from "./contexts/ShipContextProvider";
-import ActionContextProvider from "./contexts/ActionContextProvider";
 import Ship from "./components/Ship";
 import Core from "./components/Core";
 import Queue from "./components/Queue";
@@ -23,16 +22,14 @@ const Container = styled.div`
 function App() {
   return (
     <Container>
-      <ActionContextProvider>
-        <ShipContextProvider>
-          <Board map={Map1}>
-            <Ship />
-          </Board>
-          <Action />
-          <Core />
-          <Queue />
-        </ShipContextProvider>
-      </ActionContextProvider>
+      <ShipContextProvider>
+        <Board map={Map1}>
+          <Ship />
+        </Board>
+        <Action />
+        <Core />
+        <Queue />
+      </ShipContextProvider>
     </Container>
   );
 }

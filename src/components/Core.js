@@ -1,22 +1,13 @@
 import React from "react";
 import { useShipStore } from "../contexts/ShipContextProvider";
-import { useActionStore } from "../contexts/ActionContextProvider";
 
 export default function Core() {
-  const { playNextTurn, playTheQueue, reset } = useShipStore();
-
-  const { resetActions } = useActionStore();
-
-  const resetGame = () => {
-    resetActions();
-    reset();
-  };
+  const { executeAllQueue, reset } = useShipStore();
 
   return (
     <div>
-      <button onClick={resetGame}>reset</button>
-      <button onClick={playNextTurn}>playNextTurn</button>
-      <button onClick={(e) => playTheQueue(50)}>playTheQueue</button>
+      <button onClick={reset}>reset</button>
+      <button onClick={executeAllQueue}>Execute all queue</button>
     </div>
   );
 }
