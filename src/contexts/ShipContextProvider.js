@@ -63,7 +63,8 @@ export const ShipContextProvider = ({ children }) => {
   }
 
   function updateDirection(direction) {
-    if (!direction) return;
+    // +1 because value can be 0, 0 is false
+    if (!(direction + 1)) return;
     setShip((lastShip) => ({ ...lastShip, direction: direction }));
   }
 
