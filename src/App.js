@@ -1,23 +1,23 @@
 import React from "react";
-import Board from "./components/Board";
-import Ship from "./components/Ship";
-import Action from "./components/Action";
-import Core from "./components/Core"
-import Queue from "./components/Queue"
 import styled from "styled-components";
 import Map1 from "./map/map1.json";
 import ShipContextProvider from "./contexts/ShipContextProvider";
 import ActionContextProvider from "./contexts/ActionContextProvider";
+import Ship from "./components/Ship";
+import Core from "./components/Core";
+import Queue from "./components/Queue";
+import Action from "./components/Action";
+import Board from "./components/Board";
 
 const Container = styled.div`
-  overflow: hidden; 
+  overflow: hidden;
   display: flex;
   position: relative;
   width: 100%;
   height: 100vh;
   justify-content: center;
   align-items: center;
-  flex-direction:column;
+  flex-direction: column;
 `;
 
 function App() {
@@ -29,8 +29,8 @@ function App() {
             <Ship />
           </Board>
           <Action />
-          <Core/>
-          <Queue/>
+          <Core />
+          <Queue />
         </ShipContextProvider>
       </ActionContextProvider>
     </Container>
