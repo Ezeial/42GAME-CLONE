@@ -34,7 +34,21 @@ const Svg = styled.img`
 `;
 
 export default function Action() {
-  const { add, executeLastAction, executeAllQueue, isRunning } = useShipStore();
+  const {
+    add,
+    executeLastAction,
+    executeAllQueue,
+    isRunning,
+    stopHandler,
+  } = useShipStore();
+
+  function handleRunning() {
+    if (isRunning) {
+      stopHandler();
+    } else {
+      executeAllQueue();
+    }
+  }
 
   return (
     <Container>
@@ -60,13 +74,11 @@ export default function Action() {
         <ActionButton keyHelper="r" onClick={() => add("FORWARD")}>
           <Svg src={Forward} />
         </ActionButton>
+        <ActionButton keyHelper="r" onClick={handleRunning}>
+          <Svg src={isRunning ? Pause : Play} />
+        </ActionButton>
         <ActionButton keyHelper="r" onClick={executeLastAction}>
           <Svg src={Run} />
-        </ActionButton>
-      </Row>
-      <Row alone>
-        <ActionButton keyHelper="r" onClick={executeAllQueue}>
-          <Svg src={isRunning ? Pause : Play} />
         </ActionButton>
       </Row>
     </Container>

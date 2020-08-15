@@ -53,7 +53,7 @@ export default function Board({ map, children }) {
         {children}
       </InvisibleGrid>
       {map.map((row) => {
-        return row.map((box) => <Box color={box.color} />);
+        return row.map((box, i) => <Box key={i} color={box.color} />);
       })}
     </Container>
   );

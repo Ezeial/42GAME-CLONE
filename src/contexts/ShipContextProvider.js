@@ -14,8 +14,9 @@ export const ShipContextProvider = ({ children }) => {
     executeLastAction,
     executeAllQueue,
     add,
+    stopHandler,
     isRunning,
-  } = useQueue(executeAction);
+  } = useQueue(executeAction, [90, 90]);
 
   function executeAction(action) {
     if (action === "FORWARD") {
@@ -32,31 +33,31 @@ export const ShipContextProvider = ({ children }) => {
       const { direction, x, y } = lastShip;
       switch (direction) {
         case Directions.RIGHT:
-          if (x === Map1.length) return;
+          if (x === Map1.length) return lastShip;
           return {
             ...lastShip,
             x: x + 1,
           };
         case Directions.TOP:
-          if (y === 1) return;
+          if (y === 1) return lastShip;
           return {
             ...lastShip,
             y: y - 1,
           };
         case Directions.LEFT:
-          if (x === 1) return;
+          if (x === 1) return lastShip;
           return {
             ...lastShip,
             x: x - 1,
           };
         case Directions.BOTTOM:
-          if (y === Map1.length) return;
+          if (y === Map1.length) return lastShip;
           return {
             ...lastShip,
             y: y + 1,
           };
         default:
-          return;
+          return lastShip;
       }
     });
   }
@@ -79,6 +80,7 @@ export const ShipContextProvider = ({ children }) => {
     executeAllQueue,
     executeLastAction,
     isRunning,
+    stopHandler,
   };
 
   return <ShipContext.Provider value={values}>{children}</ShipContext.Provider>;

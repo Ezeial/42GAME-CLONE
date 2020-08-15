@@ -1,8 +1,7 @@
 import { useState } from "react";
 
 const useQueue = (executeAction, initialValue = []) => {
-  const [actions, setActions] = useState([]);
-  // eslint-disable-next-line no-unused-vars
+  const [actions, setActions] = useState(initialValue);
   const [handler, setHandler] = useState();
 
   const resetQueue = () => {
@@ -36,6 +35,10 @@ const useQueue = (executeAction, initialValue = []) => {
     });
   }
 
+  function stopHandler() {
+    setHandler((prevHandler) => clearInterval(prevHandler));
+  }
+
   const isRunning = Boolean(handler);
 
   return {
@@ -45,6 +48,7 @@ const useQueue = (executeAction, initialValue = []) => {
     executeAllQueue,
     add,
     isRunning,
+    stopHandler,
   };
 };
 
