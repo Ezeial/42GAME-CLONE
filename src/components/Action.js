@@ -26,6 +26,7 @@ const Row = styled.div`
   display: flex;
   justify-content: ${(props) => (props.alone ? "center" : "space-between")};
   width: 100%;
+  ${(props) => props.mt && `margin-top: ${props.mt}px;`}
 `;
 
 const Svg = styled.img`
@@ -50,6 +51,31 @@ export default function Action() {
     }
   }
 
+  window.addEventListener("keypress", (event) => actionsByKey(event.key));
+
+  function actionsByKey(key) {
+    console.log("dddd");
+    switch (key) {
+      case "w":
+        add(Directions.TOP);
+        break;
+      case "a":
+        add(Directions.LEFT);
+        break;
+      case "s":
+        add(Directions.BOTTOM);
+        break;
+      case "d":
+        add(Directions.RIGHT);
+        break;
+      case "f":
+        add("FORWARD");
+        break;
+      default:
+        return;
+    }
+  }
+
   return (
     <Container>
       <Row alone>
@@ -61,23 +87,21 @@ export default function Action() {
         <ActionButton keyHelper="a" onClick={() => add(Directions.LEFT)}>
           <Svg src={Move} rotate={0} />
         </ActionButton>
+        <ActionButton keyHelper="s" onClick={() => add(Directions.BOTTOM)}>
+          <Svg src={Move} rotate={270} />
+        </ActionButton>
         <ActionButton keyHelper="d" onClick={() => add(Directions.RIGHT)}>
           <Svg src={Move} rotate={180} />
         </ActionButton>
       </Row>
-      <Row alone>
-        <ActionButton keyHelper="s" onClick={() => add(Directions.BOTTOM)}>
-          <Svg src={Move} rotate={270} />
-        </ActionButton>
-      </Row>
-      <Row>
-        <ActionButton keyHelper="r" onClick={() => add("FORWARD")}>
+      <Row mt={16}>
+        <ActionButton keyHelper="f" onClick={() => add("FORWARD")}>
           <Svg src={Forward} />
         </ActionButton>
-        <ActionButton keyHelper="r" onClick={handleRunning}>
+        <ActionButton onClick={handleRunning}>
           <Svg src={isRunning ? Pause : Play} />
         </ActionButton>
-        <ActionButton keyHelper="r" onClick={executeLastAction}>
+        <ActionButton onClick={executeLastAction}>
           <Svg src={Run} />
         </ActionButton>
       </Row>
