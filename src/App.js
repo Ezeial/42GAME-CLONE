@@ -1,20 +1,20 @@
 import React from "react";
-import Board from "./components/Board";
-import Ship from "./components/Ship";
-import Action from "./components/Action";
-import Core from "./components/Core"
-import Queue from "./components/Queue"
+// import Board from "./components/Board";
+// import Ship from "./components/Ship";
+// import Action from "./components/Action";
+// import Core from "./components/Core"
+// import Queue fr  om "./components/Queue"
 import styled from "styled-components";
-import Map1 from "./map/map1.json";
-import ShipContextProvider from "./contexts/ShipContextProvider";
-import ActionContextProvider from "./contexts/ActionContextProvider";
+// import Map1 from "./map/map1.json";
+// import ShipContextProvider from "./contexts/ShipContextProvider";
+// import ActionContextProvider from "./contexts/ActionContextProvider";
+import ActionContainer from "./Component's/Containers/ActionContainer"
+import ShipContainer from "./Component's/Containers/ShipContainer"
 
 const Container = styled.div`
-  overflow: hidden; 
   display: flex;
   position: relative;
   width: 100%;
-  height: 100vh;
   justify-content: center;
   align-items: center;
   flex-direction:column;
@@ -23,7 +23,7 @@ const Container = styled.div`
 function App() {
   return (
     <Container>
-      <ActionContextProvider>
+      {/* <ActionContextProvider>
         <ShipContextProvider>
           <Board map={Map1}>
             <Ship />
@@ -32,7 +32,9 @@ function App() {
           <Core/>
           <Queue/>
         </ShipContextProvider>
-      </ActionContextProvider>
+      </ActionContextProvider> */}
+      <ShipContainer/>
+      <ActionContainer/>
     </Container>
   );
 }

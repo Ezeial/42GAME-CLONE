@@ -1,7 +1,7 @@
 import {useState} from 'react'
 
 const useActions = (initialValue = []) => {
-    const [actions, setActions] = useState(initialValue)
+    const [actions, setActions] = useState(initialValue.map(len => Array.from(Array(len)).map(a => {return { move: '', color: '' }})))
 
     const colors = Object.freeze({
         first: '#16a085',
