@@ -16,11 +16,7 @@ const ShipSvg = styled.img`
 `;
 
 function Ship({ ship }) {
-    return (
-        <>
-            <ShipSvg angle = {ship.r} x = {ship.x} y = {ship.y} src = {Arrow}/>
-        </>
-    )
+    return <ShipSvg angle = {ship.r} x = {ship.x} y = {ship.y} src = {Arrow}/>
 }
 
 export default Ship

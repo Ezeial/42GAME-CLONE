@@ -1,19 +1,18 @@
 import React from 'react'
 import Board from '../PureComponents/ShipContainer/Board'
 import Ship from '../PureComponents/ShipContainer/Ship'
-
-import Map1 from '../../map/map1.json'
+import { useShipStore } from '../../contexts/ShipContextProvider'
 
 // un hook pour géré le ship
 
 function ShipContainer() {
 
-    // appelle de hook
+    const { ship, map } = useShipStore()
 
     return (
         <>
-            <Board map = {Map1}>
-                <Ship ship = {{x: 1, y: 1, r: 0}}/>
+            <Board map = {map}>
+                <Ship ship = {ship}/>
             </Board>
         </>
     )

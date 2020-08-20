@@ -1,13 +1,21 @@
 import {useState} from 'react'
 
+const functions = [ 'F0', 'F1', 'F2', 'F3', 'F4', 'F5']
+
 const useActions = (initialValue = []) => {
     const [actions, setActions] = useState(initialValue.map(len => Array.from(Array(len)).map(a => {return { move: '', color: '' }})))
+    const [actionIdx, setActionIdx] = useState({x: 0, y: 0})
 
-    const colors = Object.freeze({
-        first: '#16a085',
-        second: '#8e44ad',
-        third: '#c0392b'
-    })
+    const getCurrent = () => actions[actionIdx.x][actionIdx.y]
+
+    const isLast = () => actionIdx.y === actions[actionIdx.x].length - 1
+
+    const setNextIdx = (current, prevIndex) => {
+        if (functions.includes(current)) return setActionIdx({ x: functions.indexOf(current), y: 0 })
+        if (isLast()) return
+
+        setActionIdx({ x: prevIndex.x, y: prevIndex.y + 1 })
+    }
 
     const setAction = ( newProp, functionNumber, index) => {
         const newArray = actions.map((func, funcNb) => {
@@ -22,18 +30,16 @@ const useActions = (initialValue = []) => {
         })
         setActions(newArray)
     }
-    
-    const getActions = (functionNumber) => actions[functionNumber]
-    
 
-    const resetActions = () => setActions(initialValue)
+    const resetActions = () => setActions(initialValue.map(len => Array.from(Array(len)).map(a => {return { move: '', color: '' }})))
 
     return {
+        actionIdx,
+        setNextIdx,
         setAction,
-        getActions,
         resetActions,
-        actions,
-        colors
+        getCurrent,
+        actions
     }
 }
 
