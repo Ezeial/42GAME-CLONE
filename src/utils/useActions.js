@@ -3,21 +3,20 @@ import {useState} from 'react'
 const functions = [ 'F0', 'F1', 'F2', 'F3', 'F4', 'F5']
 
 const useActions = (initialValue = []) => {
+    
     const [actions, setActions] = useState(initialValue.map(len => Array.from(Array(len)).map(a => {return { move: '', color: '' }})))
     const [actionIdx, setActionIdx] = useState({x: 0, y: 0})
 
-    const getCurrent = () => actions[actionIdx.x][actionIdx.y]
+    const isLast = (currentIdx, actions) => currentIdx.y === actions[currentIdx.x].length - 1
 
-    const isLast = () => actionIdx.y === actions[actionIdx.x].length - 1
+    const getNextIdx = (move, currentIdx) => {
+        if (functions.includes(move)) return { x: functions.indexOf(move), y: 0 }
+        if (isLast(currentIdx, actions)) return currentIdx
 
-    const setNextIdx = (current, prevIndex) => {
-        if (functions.includes(current)) return setActionIdx({ x: functions.indexOf(current), y: 0 })
-        if (isLast()) return
-
-        setActionIdx({ x: prevIndex.x, y: prevIndex.y + 1 })
+        return { x: currentIdx.x, y: currentIdx.y + 1 }
     }
 
-    const setAction = ( newProp, functionNumber, index) => {
+    const setAction = (newProp, functionNumber, index) => {
         const newArray = actions.map((func, funcNb) => {
             if (funcNb === functionNumber) {
                 return func.map((action, i) => {
@@ -34,12 +33,12 @@ const useActions = (initialValue = []) => {
     const resetActions = () => setActions(initialValue.map(len => Array.from(Array(len)).map(a => {return { move: '', color: '' }})))
 
     return {
+        actions,
         actionIdx,
-        setNextIdx,
         setAction,
         resetActions,
-        getCurrent,
-        actions
+        getNextIdx,
+        setActionIdx
     }
 }
 

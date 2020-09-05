@@ -20,36 +20,30 @@ const colorPannel = Object.freeze({
 
 function ActionContainer() {
 
-    const { getCurrent, actionIdx, setAction, actions, setNextIdx } = useAction([ 4, 4 ])
+    const { setAction, setActionIdx, getNextIdx, actionIdx,  actions } = useAction([ 4, 4 ])
 
-    const { ship, setNextShip, areColorSame } = useShipStore()
+    const { getNextShip, setShip, ship } = useShipStore()
 
-    const handlePause = () => {
-        setNextShip('FORWARD', ship)
+    const handleTurn = (ship, actionIdx) => {
     }
 
     const handlePlay = () => {
-        const { move, color } = getCurrent()
-        
-        setNextIdx(move, actionIdx)
-        
-        if (!areColorSame(color, ship)) return
-
-        setNextShip(move, ship)
     }
-
+    
     const handleRun = () => {
-       setInterval(() => handlePlay(), 1000)
+        const doTurn = (ship, actionIdx) => {
+            setShip(ship)
+            setActionIdx(actionIdx)
+            setTimeout(() => doTurn(getNextShip(actions[actionIdx.x][actionIdx.y], ship), getNextIdx(actions[actionIdx.x][actionIdx.y].move, actionIdx)), 1000)
+        }
+        doTurn(ship, actionIdx)
     }
-
-    // actionIndex, 
-    // elle va définir l'action en cours
-    // quand on débute un tour ( action[actionIndex], ship ) -> newShip / (actionIndex) -> actionIndex++
 
     return (
         <>
+            <button>stop</button>
             <Actions { ...{ actionIdx, actions, colorPannel }} moves = {Moves} handleClick = {setAction}/>
-            <Player {...{ handlePause, handleRun, handlePlay }}/>
+            <Player {...{ handleTurn, handleRun, handlePlay }}/>
         </>
     )
 }

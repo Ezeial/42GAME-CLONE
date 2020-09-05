@@ -7,61 +7,67 @@ export const ShipContextProvider = ({ children }) => {
 
   const [ship, setShip] = useState({x: 1, y: 1, r: 0})
   
-  const isOutside = (ship, len) => (ship.x === 0 || ship.x === len || ship.y === 0 || ship.y === len) 
-  
-  const setNextShip = (action, ship ) => {
-    
+  const areColorSame = ( color, ship, map ) => {
+    if (!color) return true
+    return (color === map[ship.x - 1][ship.y - 1].color) // a modif
+  }
+
+
+  const isOutside = (ship) => (ship.x < 1 || ship.x > 7 || ship.y < 1 || ship.y > 7) // a modif
+
+  const getNextShip = (action, ship) => {
     const { x, y, r } = ship
 
-    const movesToShipPos = {
+    const forwardToShip = {
+      0: {
+        x: x + 1,
+        y: y,
+        r: r
+      },
+      90: {
+        x: x,
+        y: y + 1,
+        r: r
+      },
+      180: {
+        x: x - 1,
+        y: y,
+        r: r
+      },
+      270: {
+        x: x,
+        y: y - 1,
+        r: r
+      }
+    }
+
+    const moveToShip = {
       FORWARD: {
-        0: {
-          x: x + 1,
-          y: y,
-          r: r
-        },
-        90: {
-          x: x,
-          y: y + 1,
-          r: r
-        },
-        180: {
-          x: x - 1,
-          y: y,
-          r: r
-        },
-        270: {
-          x: x,
-          y: y - 1,
-          r: r
-        }
+        ...forwardToShip[r]
       },
       LEFT: {
         x: x,
         y: y,
         r: (r + 270) % 360
-      },
-      RIGHT: {   
+      }, 
+      RIGHT: {
         x: x,
         y: y,
         r: (r + 90) % 360
       }
     }
 
-    if (action in movesToShipPos) {
-      if (action === 'FORWARD') return setShip(movesToShipPos[action][r])
-      return setShip(movesToShipPos[action])
-    }
+    if (!(action.move in moveToShip) || isOutside(moveToShip[action.move]) || !areColorSame(action.color, ship, Map1)) return ship
 
-    setShip(ship)
+    return moveToShip[action.move]
   }
 
-  const areColorSame = ( color , ship, map ) => (color === Map1[ship.x][ship.y].color) // a modif 
   
   const values = {
     ship,
     map: Map1,
-    setNextShip,
+    getNextShip,
+    setShip,
     areColorSame
   }
 

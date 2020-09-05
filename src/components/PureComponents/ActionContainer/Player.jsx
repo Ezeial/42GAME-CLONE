@@ -27,11 +27,11 @@ const Svg = styled.img`
     background-clip: padding;
 `
 
-function Player({ handlePlay, handlePause, handleRun }) {
+function Player({ handlePlay, handleTurn, handleRun }) {
     return (
         <Container>
             <Svg src = {PlaySvg} onClick = {handlePlay}/>
-            <Svg src = {RunSvg} onClick = {handlePause}/>
+            <Svg src = {RunSvg} onClick = {e => handleTurn({x: 1, y:1, r:0}, {x: 0, y: 0})}/>
             <Svg src = {PauseSvg} onClick = {handleRun}/>
         </Container>
     )
