@@ -19,20 +19,14 @@ const Svg = styled.img`
     height: 45px;
 
     cursor: pointer;
-
-    transform: rotate(${props => props.rotate}deg);
-    background-position: center;
-    background-image: url(${props => props.src});
-    background-repeat: no-repeat;
-    background-clip: padding;
 `
 
-function Player({ handlePlay, handleTurn, handleRun }) {
+function Player({ handlePause, handleTurn, handleRun }) {
     return (
         <Container>
-            <Svg src = {PlaySvg} onClick = {handlePlay}/>
-            <Svg src = {RunSvg} onClick = {e => handleTurn({x: 1, y:1, r:0}, {x: 0, y: 0})}/>
-            <Svg src = {PauseSvg} onClick = {handleRun}/>
+            <Svg src = {PlaySvg} onClick = {handleRun}/>
+            <Svg src = {RunSvg} onClick = {handleTurn}/>
+            <Svg src = {PauseSvg} onClick = {handlePause}/>
         </Container>
     )
 }

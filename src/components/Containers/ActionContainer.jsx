@@ -1,9 +1,7 @@
 import React from 'react'
 import Actions from '../PureComponents/ActionContainer/Actions'
 import Player from '../PureComponents/ActionContainer/Player'
-
-import useAction from '../../utils/useActions'
-import { useShipStore } from '../../contexts/ShipContextProvider'
+import useCommands from '../../utils/useCommands'
 
 const Moves = Object.freeze({
     names: ['FORWARD', 'RIGHT', 'LEFT'],
@@ -20,30 +18,20 @@ const colorPannel = Object.freeze({
 
 function ActionContainer() {
 
-    const { setAction, setActionIdx, getNextIdx, actionIdx,  actions } = useAction([ 4, 4 ])
+    const {
+        handleTurn,
+        handleRun,
+        handlePause,
+        actionIdx,
+        actions,
+        setAction
+    } = useCommands()
 
-    const { getNextShip, setShip, ship } = useShipStore()
-
-    const handleTurn = (ship, actionIdx) => {
-    }
-
-    const handlePlay = () => {
-    }
-    
-    const handleRun = () => {
-        const doTurn = (ship, actionIdx) => {
-            setShip(ship)
-            setActionIdx(actionIdx)
-            setTimeout(() => doTurn(getNextShip(actions[actionIdx.x][actionIdx.y], ship), getNextIdx(actions[actionIdx.x][actionIdx.y].move, actionIdx)), 1000)
-        }
-        doTurn(ship, actionIdx)
-    }
 
     return (
         <>
-            <button>stop</button>
             <Actions { ...{ actionIdx, actions, colorPannel }} moves = {Moves} handleClick = {setAction}/>
-            <Player {...{ handleTurn, handleRun, handlePlay }}/>
+            <Player {...{ handleTurn, handleRun, handlePause }}/>
         </>
     )
 }
