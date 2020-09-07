@@ -15,8 +15,12 @@ const Container = styled.div`
 `
 
 const Svg = styled.img`
-    width: 45px;
-    height: 45px;
+    width: 65px;
+    height: 65px;
+    transition: all 0.3s ease;
+    &:hover {
+        transform:scale(1.2);
+    }
 
     cursor: pointer;
 `

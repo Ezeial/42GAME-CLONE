@@ -1,19 +1,25 @@
-import React, { createContext, useContext, useState } from "react"
+import React, { createContext, useContext, useState, useEffect } from "react"
 import Map1 from '../map/map1.json'
 
 const ShipContext = createContext({})
 
 export const ShipContextProvider = ({ children }) => {
 
-  const [ship, setShip] = useState({x: 1, y: 1, r: 0})
+  const [ship, setShip] = useState({x: 2, y: 2, r: 0})
+  const [map, setMap] = useState(Map1)
   
-  const areColorSame = ( color, ship, map ) => {
+  const isOutside = (ship) => Object.keys(map[ship.x - 1][ship.y - 1]).length === 0
+
+  useEffect(() => {
+    if (Object.keys(ship).length === 0) return
+    if (isOutside(ship)) setShip({})
+  }, [ship])
+
+  const areColorSame = ( color, ship ) => {
     if (!color) return true
     return (color === map[ship.x - 1][ship.y - 1].color) // a modif
   }
 
-
-  const isOutside = (ship) => (ship.x < 1 || ship.x > 7 || ship.y < 1 || ship.y > 7) // a modif
 
   const getNextShip = (action, ship) => {
     const { x, y, r } = ship
@@ -57,7 +63,7 @@ export const ShipContextProvider = ({ children }) => {
       }
     }
 
-    if (!(action.move in moveToShip) || isOutside(moveToShip[action.move]) || !areColorSame(action.color, ship, Map1)) return ship
+    if (!(action.move in moveToShip)  || !areColorSame(action.color, ship, map)) return ship
 
     return moveToShip[action.move]
   }
@@ -65,7 +71,7 @@ export const ShipContextProvider = ({ children }) => {
   
   const values = {
     ship,
-    map: Map1,
+    map,
     getNextShip,
     setShip,
     areColorSame

@@ -1,35 +1,15 @@
 [
     [
-        {
-            "color": "#222",
-            "stars": false
-        },
-        {
-            "color": "#222",
-            "stars": false
-        },
-        {
-            "color": "#222",
-            "stars": false
-        },
-        {
-            "color": "#222",
-            "stars": false
-        },
-        {
-            "color": "#222",
-            "stars": false
-        },
-        {
-            "color": "#222",
-            "stars": false
-        },
-        {
-            "color": "#222",
-            "stars": false
-        }
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {}
     ],
     [
+        {},
         {
             "color": "#222",
             "stars": false
@@ -50,16 +30,10 @@
             "color": "#222",
             "stars": false
         },
-        {
-            "color": "#222",
-            "stars": false
-        },
-        {
-            "color": "#222",
-            "stars": false
-        }
+        {}
     ],
     [
+        {},
         {
             "color": "#222",
             "stars": false
@@ -80,16 +54,10 @@
             "color": "#222",
             "stars": false
         },
-        {
-            "color": "#222",
-            "stars": false
-        },
-        {
-            "color": "#222",
-            "stars": false
-        }
+        {}
     ],
     [
+        {},
         {
             "color": "#222",
             "stars": false
@@ -110,16 +78,10 @@
             "color": "#222",
             "stars": false
         },
-        {
-            "color": "#222",
-            "stars": false
-        },
-        {
-            "color": "#222",
-            "stars": false
-        }
+        {}
     ],
     [
+        {},
         {
             "color": "#222",
             "stars": false
@@ -140,16 +102,10 @@
             "color": "#222",
             "stars": false
         },
-        {
-            "color": "#222",
-            "stars": false
-        },
-        {
-            "color": "#222",
-            "stars": false
-        }
+        {}
     ],
     [
+        {},
         {
             "color": "#222",
             "stars": false
@@ -170,43 +126,15 @@
             "color": "#222",
             "stars": false
         },
-        {
-            "color": "#222",
-            "stars": false
-        },
-        {
-            "color": "#222",
-            "stars": false
-        }
+        {}
     ],
     [
-        {
-            "color": "#222",
-            "stars": false
-        },
-        {
-            "color": "#222",
-            "stars": false
-        },
-        {
-            "color": "#222",
-            "stars": false
-        },
-        {
-            "color": "#222",
-            "stars": false
-        },
-        {
-            "color": "#222",
-            "stars": false
-        },
-        {
-            "color": "#222",
-            "stars": false
-        },
-        {
-            "color": "#222",
-            "stars": false
-        }
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {}
     ]
 ]

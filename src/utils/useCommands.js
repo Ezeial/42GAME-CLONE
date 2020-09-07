@@ -2,8 +2,8 @@ import {useState, useEffect} from 'react'
 import useAction from './useActions'
 import { useShipStore } from '../contexts/ShipContextProvider'
 
-const useCommands = () => {
-    const { setAction, setActionIdx, getNextIdx, actionIdx,  actions } = useAction([ 4, 4 ])
+const useCommands = (initialValue = [ 4 ]) => {
+    const { setAction, setActionIdx, getNextIdx, actionIdx,  actions } = useAction(initialValue)
 
     const { getNextShip, setShip, ship } = useShipStore()
 
@@ -31,6 +31,7 @@ const useCommands = () => {
     const handlePause = () => {
         clearInterval(intervalId)
     }
+
     return {
         handleTurn,
         handleRun,

@@ -34,7 +34,7 @@ const InvisibleGrid = styled(Grid)`
 
 const Box = styled.div`
     border-radius: 5px;
-    background-color: ${props => props.color || '#444'};
+    background-color: ${props => props.color || 'red'};
     display:flex;
     justify-content:center;
     align-items:center;

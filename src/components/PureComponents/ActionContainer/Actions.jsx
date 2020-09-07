@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import Move from '../../../assets/Move.svg'
 import useToggle from '../../../utils/useToggle'
@@ -6,7 +6,7 @@ import useOutsideClick from '../../../utils/useOutsideClick'
 
 const Container = styled.div`
     display:flex;
-    align-items:center;
+    align-items:flex-start;
     justify-content:space-evenly;
     flex-direction: column;
     padding: 5px;
@@ -44,16 +44,18 @@ const Select = styled.div`
     
     border: solid 2px ${props => props.bg ? props.bg : '#EEE'};
 
-    transition: all 0.3s;
-    &:hover {
-        transform:scale(1.1);
-    }
     ${props => props.toggled && `
         border-color: yellow;
         transform:scale(1.1);
     `}
     ${props => props.current &&`
         border: 2px solid red;
+    `}
+    ${props => !props.static &&`
+        transition: all 0.3s;
+        &:hover {
+            transform:scale(1.1);
+        }
     `}
 `
 
@@ -83,8 +85,7 @@ const Flex = styled.div`
 `
 
 
-
-function AskPannel({ reset, handleClick, i, y, colorPannel }) {
+function AskPannel({ reset, handleClick, i, y, colorPannel, actions }) {
 
     const { node } = useOutsideClick(reset)
 
@@ -92,12 +93,9 @@ function AskPannel({ reset, handleClick, i, y, colorPannel }) {
 
     return <AskContainer ref = {node}>
             <Flex>
-                <Select onClick = {e => handleClick({ move: 'F0' }, i, y)}>
-                    F0
-                </Select>
-                <Select onClick = {e => handleClick({ move: 'F1' }, i, y)}>
-                    F1
-                </Select>
+                {
+                    actions.map((f, nb) => <Select onClick = {e => handleClick({ move: `F${nb}` }, i, y)}>F{nb}</Select>)
+                }
                 <Select onClick = {e => handleClick({ color: '#FFF' }, i, y)} bg = '#FFF'/>
             </Flex>
             <Flex>
@@ -128,7 +126,7 @@ function Actions({ actions, moves, handleClick, actionIdx, colorPannel }) {
             {
                 actions.map((func, i) => {
                     return <FunctionBox>
-                        <Select bg = '#EEE'> F{i}</Select>
+                        <Select static bg = '#EEE'> F{i}</Select>
                         {
                             func.map((action, y) => {
                                 return <Select current = {actionIdx.x === i && actionIdx.y === y} onClick = {e => toggle(i, y)} toggled =  {toggled[i][y]} bg = {action.color}>
@@ -136,7 +134,7 @@ function Actions({ actions, moves, handleClick, actionIdx, colorPannel }) {
                                         moves.names.includes(action.move) ? <Svg src = {Move} rotate = {moves[action.move]}/> : action.move
                                     }
                                     {
-                                        toggled[i][y] && <AskPannel colorPannel = {colorPannel} reset = {reset} i = {i} y = {y} handleClick = {handleClick}/>
+                                        toggled[i][y] && <AskPannel { ...{ handleClick, reset, colorPannel, i, y, actions }}/>
                                     }
                                 </Select>
                             })
