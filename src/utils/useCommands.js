@@ -17,6 +17,10 @@ const useCommands = (initialValue = [ 4 ]) => {
         }      
     }, [step])
 
+    useEffect(() => {
+        if (Object.keys(ship).length === 0) clearInterval(intervalId)      
+    }, [ship])
+
     const handleRun = () => {
         setIntervalId(setInterval(() => {
             setStep(prev => prev + 1)

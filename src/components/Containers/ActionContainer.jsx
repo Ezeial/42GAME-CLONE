@@ -25,7 +25,7 @@ function ActionContainer() {
         actionIdx,
         actions,
         setAction
-    } = useCommands([2, 3])
+    } = useCommands([4, 4])
 
 
     return (
